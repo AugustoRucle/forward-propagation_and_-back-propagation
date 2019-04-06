@@ -69,12 +69,16 @@ class NeuralNetwork:
                     if((amount_layers-(i+1)) > 1):
                         delta = self.ActivationInversa(array_Y[index-1]) * (( delta.transpose() * array_weight[index][:, 0:-1] ).transpose())
             
-            self.final_weight = array_weight.copy()
-            self.final_records = records.copy()
-            records.clear()
             self.mses = (1/amount_element_input) * np.sum(err)
             self.list_mse.append(self.mses)
             self.list_period.append(self.periods)
+            
+            #Save final record and weights
+            self.final_weight = array_weight.copy()
+            self.final_records = records.copy()
+            records.clear()
+
+            # self.CreateChartError(self.list_mse, self.list_period)
         
     def CreateChartError(self, list_mse, list_period):
         plt.title('Evolución del error cuadratico medio (mse)')
